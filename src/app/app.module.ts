@@ -9,9 +9,11 @@ import { HeaderComponent } from './header/header.component';
 import { MenuLibraryComponent } from './menu-library/menu-library.component';
 import { IndexComponent } from './index/index.component';
 import { LibraryComponent } from './library/library.component';
-import { NewUserComponent } from './new-user/new-user.component';
+import { NewUserComponent } from './signup/new-user.component';
 import { ReadComponent } from './read/read.component';
 import { SearchComponent } from './search/search.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +27,12 @@ import { SearchComponent } from './search/search.component';
     LibraryComponent,
     NewUserComponent,
     ReadComponent,
-    SearchComponent
+    SearchComponent,
+    SignupComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
