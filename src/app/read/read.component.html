@@ -1,1 +1,167 @@
-<p>read works!</p>
+{{> header}}
+<body>
+<div
+  class="container-fluid pt-5 px-5 min-vh-100 justify-content-center text-white align-items-center"
+  style="background-color: #4c4d4e"
+>
+  <div class="container mt-4 pb-2">
+    <div class="container">
+      <a href="/search" class="btn btn-outline-secondary btn-sm"
+      >Back to search</a
+      >
+      <div class="row justify-content-center">
+        <div class="clearfix mt-4">
+          <img
+            src="{{img}}"
+            class="col float-xl-end mb-3 ms-md-3 w-25"
+            alt="..."
+          />
+          <p class="fs-1">{{title}} by {{authors}}</p>
+          {{#authenticated}} {{#datas}} {{^inlibrary}}
+          <p>
+            <a href="/addTolibrary/{{id}}" class="btn btn-info btn-sm"
+            >Add to my books</a
+            >
+          </p>
+          {{/inlibrary}} {{#inlibrary}}
+          <p>
+            <a href="/removeFromlibrary/{{id}}" class="btn btn-info btn-sm"
+            >Remove from my books</a
+            >
+          </p>
+          {{#status_0}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_0}} {{#status_1}}
+          <p>
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_1}} {{#status_2}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_2}} {{#status_3}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+          </p>
+          {{/status_3}} {{/inlibrary}} {{/datas}} {{/authenticated}}
+
+          <p>{{description}}</p>
+          <p>Published by {{publisher}} in {{publishedDate}}</p>
+          <p>Categories : {{categories}}</p>
+          <p>Number of pages : {{pageCount}}</p>
+          <p>isbn : {{isbn}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{{> footer}}{{> header}}
+<body>
+<div
+  class="container-fluid pt-5 px-5 min-vh-100 justify-content-center text-white align-items-center"
+  style="background-color: #4c4d4e"
+>
+  <div class="container mt-4 pb-2">
+    <div class="container">
+      <a href="/search" class="btn btn-outline-secondary btn-sm"
+      >Back to search</a
+      >
+      <div class="row justify-content-center">
+        <div class="clearfix mt-4">
+          <img
+            src="{{img}}"
+            class="col float-xl-end mb-3 ms-md-3 w-25"
+            alt="..."
+          />
+          <p class="fs-1">{{title}} by {{authors}}</p>
+          {{#authenticated}} {{#datas}} {{^inlibrary}}
+          <p>
+            <a href="/addTolibrary/{{id}}" class="btn btn-info btn-sm"
+            >Add to my books</a
+            >
+          </p>
+          {{/inlibrary}} {{#inlibrary}}
+          <p>
+            <a href="/removeFromlibrary/{{id}}" class="btn btn-info btn-sm"
+            >Remove from my books</a
+            >
+          </p>
+          {{#status_0}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_0}} {{#status_1}}
+          <p>
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_1}} {{#status_2}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setReading/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Reading in process"</a
+            >
+          </p>
+          {{/status_2}} {{#status_3}}
+          <p>
+            <a href="/setRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "Read"</a
+            >
+            <a href="/setToRead/{{id}}" class="btn btn-secondary btn-sm"
+            >Set as "To be read"</a
+            >
+          </p>
+          {{/status_3}} {{/inlibrary}} {{/datas}} {{/authenticated}}
+
+          <p>{{description}}</p>
+          <p>Published by {{publisher}} in {{publishedDate}}</p>
+          <p>Categories : {{categories}}</p>
+          <p>Number of pages : {{pageCount}}</p>
+          <p>isbn : {{isbn}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{{> footer}}

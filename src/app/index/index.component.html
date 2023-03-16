@@ -1,1 +1,69 @@
-<p>index works!</p>
+{{> header}}
+
+<div
+  class="container-fluid min-vh-100 pt-5 px-5 justify-content-center text-white align-items-center"
+  style="background-color: rgb(76, 77, 77)"
+>
+  <form action="/search" method="POST">
+    <div class="row my-3">
+      <a>
+        <img
+          src="https://www.logolynx.com/images/logolynx/7c/7c117c304fa7ac814f5b1d2a5139236d.png"
+          class="mx-auto d-block"
+          alt="..."
+          style="border-radius: 10%; max-width: 130px; width: 100%"
+        />
+      </a>
+    </div>
+    <div class="row my-3">
+      <div class="text-center fs-1">BookWorm</div>
+    </div>
+    <div class="row justify-content-md-center my-3">
+      <div class="col col-lg-5">
+        <input
+          type="text"
+          class="form-control form-control-dark"
+          placeholder="Title"
+          name="title"
+        />
+      </div>
+    </div>
+    <div class="row justify-content-md-center my-3">
+      <div class="col col-lg-5">
+        <input
+          type="text"
+          class="form-control form-control-dark"
+          placeholder="Author"
+          name="author"
+        />
+      </div>
+    </div>
+    <div class="row justify-content-md-center my-3">
+      <div class="col col-lg-5">
+        <input
+          type="number"
+          class="form-control form-control-dark"
+          placeholder="ISBN"
+          name="isbn"
+        />
+      </div>
+    </div>
+    <div class="row justify-content-center my-3">
+      <div class="col col-auto">
+        <input type="submit" value="Search" class="btn btn-dark" />
+      </div>
+    </div>
+    <div class="row">
+      <p class="text-center pt-3">
+        Search a book by author, title or even by ISBN ! <br />
+        Use the most fields as you can to get the most precise results
+        possible and add books to your own library. <br />If you don't have
+        an account yet, create one by clicking on the button top right!
+      </p>
+    </div>
+  </form>
+</div>
+
+{{> footer}}
+</body>
+</html>

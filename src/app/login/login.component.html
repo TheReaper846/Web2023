@@ -1,1 +1,36 @@
-<p>login works!</p>
+{{> header}}
+<body>
+<div
+  class="container-fluid pt-5 px-5 min-vh-100 justify-content-center align-items-center"
+  style="background-color: #4c4d4e"
+>
+  <div class="container mt-4 pb-2">
+    <div class="text-center">
+      <div class="container-sm">
+        <div class="row justify-content-center">
+          <div class="col-6 col-sm-3">
+
+            <form action="/login" method="post">
+              <h1 class="h3 mb-3 mt-5 fw-normal text-white">Please sign in</h1>
+
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" name="name" required>
+                <label for="floatingInput text-black">Username</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" name="password" required>
+                <label for="floatingPassword text-black">Password</label>
+              </div>
+
+              <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" >Sign in</button>
+              <p class="mt-5 mb-3 text-muted text-white">© wikart-siari</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+</body>
+</html>
