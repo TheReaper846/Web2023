@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const User = require("./user");
+const Library = require("./library");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -62,6 +63,36 @@ app.post("/login", async (req, res) => {
 app.post("/logout", (req, res) => {
   req.session = null;
   res.status(200).json({ message: "Logged out successfully" });
+});
+
+app.get("/profile", async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const user = await User.findById(req.session.userId, { password: 0 });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user profile", error });
+  }
+});
+
+app.get("/library/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const library = await Library.find({ user: userId });
+    if (!library) {
+      return res.status(404).json({ message: "Library not found" });
+    }
+    res.status(200).json({ library });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching library", error });
+  }
 });
 
 app.listen(PORT, () => {
