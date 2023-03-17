@@ -9,13 +9,13 @@ import { LoginComponent } from './login/login.component';
 import { ErrorComponent } from './error/error.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { MenuLibraryComponent } from './menu-library/menu-library.component';
 import { IndexComponent } from './index/index.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ReadComponent } from './read/read.component';
 import { SearchComponent } from './search/search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './signup/signup.component';
+import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +24,12 @@ import { SignupComponent } from './signup/signup.component';
     ErrorComponent,
     FooterComponent,
     HeaderComponent,
-    MenuLibraryComponent,
     IndexComponent,
     ProfileComponent,
     ReadComponent,
     SearchComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileHeaderComponent
   ],
   imports: [
     BrowserModule,
