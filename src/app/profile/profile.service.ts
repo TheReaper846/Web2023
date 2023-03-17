@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LibraryService {
+export class ProfileService {
   private libraryUrl = 'http://localhost:3000/library';
 
   constructor(private http: HttpClient) {}

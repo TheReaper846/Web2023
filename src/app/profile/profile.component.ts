@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { LibraryService } from './library.service';
+import { ProfileService } from './profile.service';
 
 @Component({
-  selector: 'app-library',
-  templateUrl: './library.component.html',
-  styleUrls: ['./library.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class LibraryComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   user: any;
   library: any[] = [];
 
   constructor(
     private authService: AuthService,
-    private libraryService: LibraryService,
+    private profileService: ProfileService,
     private router: Router
   ) {}
 
@@ -31,7 +31,7 @@ export class LibraryComponent implements OnInit {
   }
 
   getLibrary(): void {
-    this.libraryService.getLibrary(this.user._id).subscribe(
+    this.profileService.getLibrary(this.user._id).subscribe(
       (response) => {
         this.library = response;
       },

@@ -9,7 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuLibraryComponent } from './menu-library/menu-library.component';
 import { IndexComponent } from './index/index.component';
-import { LibraryComponent } from './library/library.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ReadComponent } from './read/read.component';
 import { SearchComponent } from './search/search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,7 +24,7 @@ import { SignupComponent } from './signup/signup.component';
     HeaderComponent,
     MenuLibraryComponent,
     IndexComponent,
-    LibraryComponent,
+    ProfileComponent,
     ReadComponent,
     SearchComponent,
     SignupComponent
