@@ -1,51 +1,20 @@
 <nav>
   <header class="bg-black text-white">
     <div class="container">
-      <div
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
-      >
-        <ul
-          class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
-        >
-          {{#full}}
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li>
-            <a href="/library" class="nav-link px-3 text-info">Full library</a>
+            <a [routerLink]="['/library']" class="nav-link px-3" [ngClass]="{'text-info': full, 'text-secondary': !full}">Full library</a>
           </li>
-          {{/full}} {{^full}}
           <li>
-            <a href="/library" class="nav-link px-3 text-secondary"
-            >Full library</a
-            >
+            <a [routerLink]="['/alreadyRead']" class="nav-link px-3" [ngClass]="{'text-info': read, 'text-white': !read}">Read</a>
           </li>
-          {{/full}} {{#read}}
           <li>
-            <a href="/alreadyRead" class="nav-link px-3 text-info">Read</a>
+            <a [routerLink]="['/toRead']" class="nav-link px-3" [ngClass]="{'text-info': toRead, 'text-white': !toRead}">To be read</a>
           </li>
-          {{/read}} {{^read}}
           <li>
-            <a href="/alreadyRead" class="nav-link px-3 text-white">Read</a>
+            <a [routerLink]="['/reading']" class="nav-link px-3" [ngClass]="{'text-info': reading, 'text-white': !reading}">Reading in process</a>
           </li>
-          {{/read}} {{#toRead}}
-          <li>
-            <a href="/toRead" class="nav-link px-3 text-info">To be read</a>
-          </li>
-          {{/toRead}} {{^toRead}}
-          <li>
-            <a href="/toRead" class="nav-link px-3 text-white">To be read</a>
-          </li>
-          {{/toRead}} {{#reading}}
-          <li>
-            <a href="/reading" class="nav-link px-3 text-info"
-            >Reading in process</a
-            >
-          </li>
-          {{/reading}} {{^reading}}
-          <li>
-            <a href="/reading" class="nav-link px-3 text-white"
-            >Reading in process</a
-            >
-          </li>
-          {{/reading}}
         </ul>
       </div>
     </div>

@@ -16,6 +16,10 @@ import { SearchComponent } from './search/search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './signup/signup.component';
 import { ProfileHeaderComponent } from './profile-header/profile-header.component';
+import { LibraryComponent } from './library/library.component';
+import { AlreadyReadComponent } from './already-read/already-read.component';
+import { ToReadComponent } from './to-read/to-read.component';
+import { ReadingComponent } from './reading/reading.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { ProfileHeaderComponent } from './profile-header/profile-header.componen
     ReadComponent,
     SearchComponent,
     SignupComponent,
-    ProfileHeaderComponent
+    ProfileHeaderComponent,
+    LibraryComponent,
+    AlreadyReadComponent,
+    ToReadComponent,
+    ReadingComponent
   ],
   imports: [
     BrowserModule,
