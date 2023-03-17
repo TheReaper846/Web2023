@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const User = require("./user");
 const Library = require("./library");
+const bookController = require("./bookController");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -94,6 +95,19 @@ app.get("/library/:userId", async (req, res) => {
     res.status(500).json({ message: "Error fetching library", error });
   }
 });
+
+app.post("/books", async (req, res) => {
+  const { title, authors, isbn, img } = req.body;
+
+  try {
+    const book = new Book({ title, authors, isbn, img });
+    await book.save();
+    res.status(201).json({ message: "Book saved successfully", book });
+  } catch (error) {
+    res.status(400).json({ message: "Error saving book", error });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
