@@ -3,7 +3,7 @@
     <ng-container *ngFor="let book of books">
       <div class="col">
         <div class="card h-100 shadow-sm bg-dark">
-          <a href="/readFromLib/{{book._id}}" class="nav-link p-1 text-black">
+          <a [routerLink]="['/read', book._id]" class="nav-link p-1 text-black">
             <img src="{{book.img}}" class="bd-placeholder-img card-img-top" />
             <div class="card-body">
               <p class="card-text text-white text-center">{{book.title}}</p>

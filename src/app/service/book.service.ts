@@ -14,7 +14,8 @@ export class BookService {
   apiSearch(
     title: string,
     author: string,
-    isbn: string
+    isbn: string,
+    maxResults: number
   ): Observable<Book[]> {
     // Construisez l'URL de l'API ici
     let url = 'https://www.googleapis.com/books/v1/volumes?q=';
@@ -32,7 +33,7 @@ export class BookService {
       } else if (title !== '' && isbn === '' && author === '') {
         url += 'intitle:' + title;
       }
-      url += '&maxResults=40&key=AIzaSyD7EJo8D4aciXWQpw-2RVmJ-O95gh1QU3g';
+      url += '&maxResults='+ maxResults.toString() +'&key=AIzaSyD7EJo8D4aciXWQpw-2RVmJ-O95gh1QU3g';
       url = url.replace(/ /g, '+');
     } else {
       return new Observable((observer) => {
@@ -48,13 +49,20 @@ export class BookService {
             authors: item.volumeInfo.authors.join(', '),
             isbn: item.volumeInfo.industryIdentifiers[0].identifier,
             img: item.volumeInfo.imageLinks.thumbnail,
+            ...(maxResults === 1 && {
+              description: item.volumeInfo.description,
+              publisher: item.volumeInfo.publisher,
+              publishedDate: item.volumeInfo.publishedDate,
+              categories: item.volumeInfo.categories?.join(', '),
+              pageCount: item.volumeInfo.pageCount,
+            }),
           };
           return book;
         });
 
-        // Enregistrer les résultats dans la base de données et renvoyer les livres enregistrés
+        // Save the search results in the database and return the saved books
         const savedBooks = await Promise.all(
-          searchResults.map((book : Book) => this.saveBook(book).toPromise())
+          searchResults.map((book: Book) => this.saveBook(book).toPromise())
         );
         observer.next(savedBooks);
         observer.complete();
@@ -64,5 +72,30 @@ export class BookService {
 
   saveBook(book: Book): Observable<Book> {
     return this.http.post<Book>(`${this.API_URL}/books`, book);
+  }
+
+  getBookDetails(
+    lib: number,
+    id: string,
+    userName: string,
+    reread: number
+  ): Observable<any> {
+    // L'URL de l'API pour récupérer les informations du livre
+    const url = `${this.API_URL}/readBook`;
+
+    // Le payload pour la requête POST
+    const payload = {
+      lib: lib,
+      id: id,
+      userName: userName,
+      reread: reread,
+    };
+
+    // Envoie la requête POST à l'API Node.js
+    return this.http.post<any>(url, payload);
+  }
+
+  getAllBooks(): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/search`);
   }
 }

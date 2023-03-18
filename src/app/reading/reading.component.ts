@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { ProfileService } from '../profile/profile.service';
+import { ProfileService } from '../service/profile.service';
 
 @Component({
   selector: 'app-reading',
