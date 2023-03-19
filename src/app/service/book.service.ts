@@ -98,4 +98,10 @@ export class BookService {
   getAllBooks(): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/search`);
   }
+
+  getBookStatus(title: string, isbn: string, userId: string): Observable<any> {
+    // Replace with the appropriate API URL and endpoint
+    const url = `${this.API_URL}/bookstatus?title=${title}&isbn=${isbn}&userId=${userId}`;
+    return this.http.get(url);
+  }
 }

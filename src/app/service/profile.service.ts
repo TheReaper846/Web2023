@@ -14,7 +14,7 @@ export class ProfileService {
     return this.http.get(`${this.libraryUrl}/${userId}`);
   }
 
-   getFilteredLibrary(userId: string, status: number): Observable<any> {
+  getFilteredLibrary(userId: string, status: number): Observable<any> {
     return this.http.get(`${this.libraryUrl}/${userId}/status/${status}`);
   }
 }

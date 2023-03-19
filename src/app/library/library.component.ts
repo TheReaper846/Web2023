@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ProfileService } from '../service/profile.service';
+import { Router } from '@angular/router'; // Ajoutez cette ligne pour importer Router
 
 @Component({
   selector: 'app-library',
@@ -9,27 +10,28 @@ import { ProfileService } from '../service/profile.service';
 })
 export class LibraryComponent implements OnInit {
   user: any;
+  userid: any;
   @Input() books: any[] = [];
 
   constructor(
     private authService: AuthService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router // Injectez Router ici
   ) {}
 
   ngOnInit(): void {
-    this.authService.getProfile().subscribe(
-      (response) => {
-        this.user = response.user;
-        this.getFilteredLibrary(0); // Modifier cette valeur pour chaque composant (0 pour Library, 1 pour AlreadyRead, etc.)
-      },
-      (error) => {
-        console.error('Error fetching user profile', error);
-      }
-    );
+    // Vérifiez si l'utilisateur est authentifié
+    if (!this.authService.isAuthenticated) {
+      // Si ce n'est pas le cas, redirigez vers le routeur "error"
+      this.router.navigate(['/error']);
+    } else {
+      this.userid = this.authService.getCurrentUserId();
+      this.getFilteredLibrary(0); // Modifier cette valeur pour chaque composant (0 pour Library, 1 pour AlreadyRead, etc.
+    }
   }
 
   getFilteredLibrary(status: number): void {
-    this.profileService.getFilteredLibrary(this.user._id, status).subscribe(
+    this.profileService.getLibrary(this.userid).subscribe(
       (response) => {
         this.books = response;
       },

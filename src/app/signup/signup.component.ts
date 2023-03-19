@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
@@ -9,8 +11,13 @@ import { AuthService } from '../auth.service';
 export class SignupComponent {
   name!: string;
   password!: string;
+  password2!: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  passwordsMatch(): boolean {
+    return this.password === this.password2;
+  }
 
   signup(): void {
     this.authService.signup(this.name, this.password).subscribe(
@@ -19,6 +26,15 @@ export class SignupComponent {
       },
       (error) => {
         console.error('Error creating user', error);
+      }
+    );
+    this.authService.login(this.name, this.password).subscribe(
+      (response) => {
+        console.log('Logged in successfully', response);
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Error logging in', error);
       }
     );
   }

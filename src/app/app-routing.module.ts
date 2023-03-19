@@ -12,6 +12,7 @@ import { ToReadComponent } from './to-read/to-read.component';
 import { ReadingComponent } from './reading/reading.component';
 import { SearchComponent } from './search/search.component';
 import { ReadComponent } from './read/read.component';
+import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -20,12 +21,13 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'error', component: ErrorComponent },
-  { path: 'library', component: LibraryComponent, canActivate: [AuthGuard] },
+  { path: 'library', component: LibraryComponent},
   { path: 'alreadyRead', component: AlreadyReadComponent, canActivate: [AuthGuard] },
   { path: 'toRead', component: ToReadComponent, canActivate: [AuthGuard] },
   { path: 'reading', component: ReadingComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent },
   { path: 'read/:entry', component: ReadComponent },
+  { path: 'logout', component: LogoutComponent },
 ];
 
 @NgModule({

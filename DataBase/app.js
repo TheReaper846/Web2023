@@ -5,26 +5,29 @@ const cookieSession = require("cookie-session");
 const User = require("./user");
 const Library = require("./library");
 const bookController = require("./bookController");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+let currentUser = null;
+let currentUserId = null;
 
 // URL de connexion
 const url =
-  "mongodb+srv://amsy158:Amine2001..@cluster0.hohoaks.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://neile:o5wspUj8OfohVWB8@cluster0.rnble7p.mongodb.net/?retryWrites=true&w=majority";
 
 // Options de connexion
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-
 // Connexion à la base de données
 mongoose
   .connect(url, options)
   .then(() => console.log("Connexion réussie !"))
   .catch((err) => console.error("Erreur de connexion :", err));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -50,11 +53,17 @@ app.post("/login", async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    const user = await User.findOne({ name, password });
-    if (!user) {
+    // Trouver l'utilisateur par son nom
+    const user = await User.findOne({ name });
+
+    // Si l'utilisateur n'existe pas ou que le mot de passe est incorrect, renvoyer une erreur
+    if (!user || user.password !== password) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+
+    // Si l'utilisateur existe et que le mot de passe est correct, enregistrer l'ID de l'utilisateur dans la session
     req.session.userId = user._id;
+    currentUser = name;
     res.status(200).json({ message: "Logged in successfully", user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
@@ -66,25 +75,9 @@ app.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-app.get("/profile", async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  try {
-    const user = await User.findById(req.session.userId, { password: 0 });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching user profile", error });
-  }
-});
-
 app.get("/library/:userId", async (req, res) => {
   const { userId } = req.params;
-
+  console.log(userId)
   try {
     const library = await Library.find({ user: userId });
     if (!library) {
@@ -109,6 +102,86 @@ app.post("/books", async (req, res) => {
 });
 
 app.get("/search", bookController.getAllBooks);
+
+app.get("/bookstatus", async (req, res) => {
+  const { title, isbn, userId } = req.query;
+
+  try {
+    const bookStatus = await Library.findOne({
+      title: title,
+      isbn: isbn,
+      user: userId,
+    });
+
+    if (!bookStatus) {
+      return res.status(404).json({ message: "Book status not found" });
+    }
+
+    let status = {};
+
+    if (bookStatus.status === 0) {
+      status = {
+        status_0: true,
+        status_1: false,
+        status_2: false,
+        status_3: false,
+      };
+    } else if (bookStatus.status === 1) {
+      status = {
+        status_0: false,
+        status_1: true,
+        status_2: false,
+        status_3: false,
+      };
+    } else if (bookStatus.status === 2) {
+      status = {
+        status_0: false,
+        status_1: false,
+        status_2: true,
+        status_3: false,
+      };
+    } else if (bookStatus.status === 3) {
+      status = {
+        status_0: false,
+        status_1: false,
+        status_2: false,
+        status_3: true,
+      };
+    }
+
+    res.status(200).json(status);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching book status", error });
+  }
+});
+
+app.get("/user", async (req, res) => {
+  const { name } = currentUser;
+
+  try {
+    const user = await User.findOne({ name });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+
+  currentUserId = user._id;
+});
+
+app.get("/currentUserId", async (req, res) => {
+  try {
+    const user = await User.findOne({ name: currentUser });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ userId: user._id });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user", error });
+  }
+});
 
 
 app.listen(PORT, () => {

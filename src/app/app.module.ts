@@ -20,6 +20,7 @@ import { LibraryComponent } from './library/library.component';
 import { AlreadyReadComponent } from './already-read/already-read.component';
 import { ToReadComponent } from './to-read/to-read.component';
 import { ReadingComponent } from './reading/reading.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ReadingComponent } from './reading/reading.component';
     LibraryComponent,
     AlreadyReadComponent,
     ToReadComponent,
-    ReadingComponent
+    ReadingComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

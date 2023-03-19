@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, map, catchError, of, filter } from 'rxjs';
 
 interface LoginResponse {
   user?: {
@@ -10,6 +10,9 @@ interface LoginResponse {
   message: string;
 }
 
+interface ApiResponse {
+  userId?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -53,4 +56,13 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
+  getCurrentUserId(): Observable<string | null> {
+  return this.http.get<ApiResponse>(`${this.apiUrl}/currentUserId`).pipe(
+    filter(response => response !== null && response.userId !== undefined),
+    map(response => response.userId || null),
+    catchError(() => {
+      return of(null);
+    })
+  );
+}
 }
