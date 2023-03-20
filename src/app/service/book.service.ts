@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Book } from '../models/book.model';
 
 @Injectable({
@@ -44,17 +44,35 @@ export class BookService {
     return new Observable((observer) => {
       this.http.get(url).subscribe(async (data: any) => {
         const searchResults = data.items.map((item: any): Book => {
+          let isbn = '';
+          let authors = '';
+          let image = '';
+          try {
+            isbn = item.volumeInfo.industryIdentifiers[0].identifier;
+          }catch (e) {
+            isbn = 'No ISBN';
+          }
+          try {
+            authors = item.volumeInfo.authors.join(', ');
+          }catch (e) {
+            authors = 'No author';
+          }
+          try {
+            image = item.volumeInfo.imageLinks.thumbnail;
+          }catch (e) {
+            image = 'No image';
+          }
           const book: Book = {
-            title: item.volumeInfo.title,
-            authors: item.volumeInfo.authors.join(', '),
-            isbn: item.volumeInfo.industryIdentifiers[0].identifier,
-            img: item.volumeInfo.imageLinks.thumbnail,
+            title: item.volumeInfo.title || 'No title',
+            authors: authors,
+            isbn: isbn,
+            img: image,
             ...(maxResults === 1 && {
-              description: item.volumeInfo.description,
-              publisher: item.volumeInfo.publisher,
-              publishedDate: item.volumeInfo.publishedDate,
-              categories: item.volumeInfo.categories?.join(', '),
-              pageCount: item.volumeInfo.pageCount,
+              description: item.volumeInfo.description || 'No description',
+              publisher: item.volumeInfo.publisher || 'No publisher',
+              publishedDate: item.volumeInfo.publishedDate || 'No date',
+              categories: item.volumeInfo.categories?.join(', ') || 'No categories',
+              pageCount: item.volumeInfo.pageCount || 'No page count',
             }),
           };
           return book;
@@ -73,6 +91,16 @@ export class BookService {
   saveBook(book: Book): Observable<Book> {
     return this.http.post<Book>(`${this.API_URL}/books`, book);
   }
+
+  clearBooks(): Observable<any> {
+  return this.http.post<any>(`${this.API_URL}/clear`, {}).pipe(
+    catchError(error => {
+      console.error(error);
+      return throwError(error);
+    })
+  );
+}
+
 
   getBookDetails(
     lib: number,

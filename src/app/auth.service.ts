@@ -14,6 +14,10 @@ interface ApiResponse {
   userId?: string;
 }
 
+interface ServerResponse {
+  userId?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -57,12 +61,12 @@ export class AuthService {
   }
 
   getCurrentUserId(): Observable<string | null> {
-  return this.http.get<ApiResponse>(`${this.apiUrl}/currentUserId`).pipe(
-    filter(response => response !== null && response.userId !== undefined),
+  return this.http.get<{ userId?: string }>(`${this.apiUrl}/currentUserId`).pipe(
     map(response => response.userId || null),
     catchError(() => {
       return of(null);
     })
   );
 }
+
 }

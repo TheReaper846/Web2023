@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const User = require("./user");
 const Library = require("./library");
+const Book = require("./book");
 const bookController = require("./bookController");
 const cors = require("cors");
 
@@ -76,8 +77,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/library/:userId", async (req, res) => {
-  const { userId } = req.params;
-  console.log(userId)
+  const { userId } = req.params.userId;
   try {
     const library = await Library.find({ user: userId });
     if (!library) {
@@ -91,13 +91,21 @@ app.get("/library/:userId", async (req, res) => {
 
 app.post("/books", async (req, res) => {
   const { title, authors, isbn, img } = req.body;
-
   try {
     const book = new Book({ title, authors, isbn, img });
     await book.save();
     res.status(201).json({ message: "Book saved successfully", book });
   } catch (error) {
     res.status(400).json({ message: "Error saving book", error });
+  }
+});
+
+app.post("/clear", async (req, res) => {
+  try {
+    await Book.deleteMany({});
+    res.status(200).json({ message: "Books deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: "Error deleting books", error });
   }
 });
 
@@ -172,8 +180,9 @@ app.get("/user", async (req, res) => {
 });
 
 app.get("/currentUserId", async (req, res) => {
+  const { name } = currentUser;
   try {
-    const user = await User.findOne({ name: currentUser });
+    const user = await User.findOne({ name });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -182,7 +191,6 @@ app.get("/currentUserId", async (req, res) => {
     res.status(500).json({ message: "Error fetching user", error });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

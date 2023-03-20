@@ -42,6 +42,7 @@ export class ReadComponent implements OnInit {
     this.bookService.apiSearch('', '', isbn, 1).subscribe((books: Book[]) => {
       // Display the book details
       const book = books[0];
+      console.log(book);
       this.img = book.img;
       this.title = book.title;
       this.authors = book.authors;

@@ -4,7 +4,7 @@
   class="container-fluid min-vh-100 pt-5 px-5 justify-content-center text-white align-items-center"
   style="background-color: rgb(76, 77, 77)"
 >
-  <form (submit)="onSearch()">
+  <form #searchForm="ngForm">
     <div class="row my-3">
       <a>
         <img
@@ -53,7 +53,11 @@
     </div>
     <div class="row justify-content-center my-3">
       <div class="col col-auto">
-        <button type="submit" class="btn btn-dark">Search</button>
+        <button
+                  class="btn btn-dark"
+                  type="button"
+                  (click)="onSearch()"
+                >Search</button>
       </div>
     </div>
     <div class="row">

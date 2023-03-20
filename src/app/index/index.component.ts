@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { BookService } from '../service/book.service';
 
 @Component({
@@ -15,17 +16,18 @@ export class IndexComponent {
   constructor(private bookService: BookService, private router: Router) {}
 
   onSearch(): void {
-    // Traiter la soumission du formulaire et effectuer la recherche
-    this.bookService
-      .apiSearch(this.title, this.author, this.isbn ? this.isbn.toString() : '', 40)
-      .subscribe(
-        (books) => {
-          console.log('Books saved to the database:', books);
-          this.router.navigate(['/search']);
-        },
-        (error) => {
-          console.error('Error searching books:', error);
-        }
-      );
-  }
+  this.bookService.clearBooks()
+    .pipe(
+      switchMap(() => this.bookService.apiSearch(this.title, this.author, this.isbn ? this.isbn.toString() : '', 40))
+    )
+    .subscribe(
+      (books) => {
+        console.log('Books saved to the database:', books);
+        this.router.navigate(['/search']);
+      },
+      (error) => {
+        console.error('Error searching books:', error);
+      }
+    );
+}
 }
