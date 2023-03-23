@@ -1,3 +1,28 @@
+
+<app-header></app-header>
+<nav>
+  <header class="bg-black text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li>
+            <a [routerLink]="['/library']" class="nav-link px-3">Full library</a>
+          </li>
+          <li>
+            <a [routerLink]="['/alreadyRead']" class="nav-link px-3 text-info">Read</a>
+          </li>
+          <li>
+            <a [routerLink]="['/toRead']" class="nav-link px-3 text-info">To be read</a>
+          </li>
+          <li>
+            <a [routerLink]="['/reading']" class="nav-link px-3 text-info">Reading in process</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+</nav>
+
 <div
   class="container-fluid min-vh-100 pt-3 pt-4 px-5 text-white"
   style="background-color: #4c4d4e"
@@ -17,3 +42,5 @@
     </div>
 </div>
 </div>
+
+<app-footer></app-footer>

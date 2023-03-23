@@ -10,12 +10,10 @@ import { ErrorComponent } from './Modules/error/error.component';
 import { FooterComponent } from './Modules/footer/footer.component';
 import { HeaderComponent } from './Modules/header/header.component';
 import { IndexComponent } from './Modules/index/index.component';
-import { ProfileComponent } from './Modules/profile/profile.component';
 import { ReadComponent } from './Modules/read/read.component';
 import { SearchComponent } from './Modules/search/search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './Modules/signup/signup.component';
-import { ProfileHeaderComponent } from './Modules/profile-header/profile-header.component';
 import { LibraryComponent } from './Modules/library/library.component';
 import { AlreadyReadComponent } from './Modules/already-read/already-read.component';
 import { ToReadComponent } from './Modules/to-read/to-read.component';
@@ -30,11 +28,9 @@ import { LogoutComponent } from './Modules/logout/logout.component';
     FooterComponent,
     HeaderComponent,
     IndexComponent,
-    ProfileComponent,
     ReadComponent,
     SearchComponent,
     SignupComponent,
-    ProfileHeaderComponent,
     LibraryComponent,
     AlreadyReadComponent,
     ToReadComponent,

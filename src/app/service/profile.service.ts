@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProfileService {
-  private libraryUrl = 'http://localhost:3000/library';
+  private libraryUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   getFullLibrary(): Observable<any> {
-    return this.http.get<any>(`${this.libraryUrl}`);
+    return this.http.get<any>(`${this.libraryUrl}/library`);
   }
 
-  getFilteredLibrary(userId: string, status: number): Observable<any> {
-    return this.http.get(`${this.libraryUrl}/${userId}/status/${status}`);
+  getFilteredLibrary(status: string): Observable<any> {
+    return this.http.get(`${this.libraryUrl}/filteredLibrary?status=${status}`);
   }
 }

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IndexComponent } from './Modules/index/index.component';
 import { LoginComponent } from './Modules/login/login.component';
-import { ProfileComponent } from './Modules/profile/profile.component';
 import { SignupComponent } from './Modules/signup/signup.component';
 import { ErrorComponent } from './Modules/error/error.component';
 import { LibraryComponent } from './Modules/library/library.component';
@@ -19,9 +18,8 @@ const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent},
   { path: 'error', component: ErrorComponent },
-  { path: 'library', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'library', component: LibraryComponent, canActivate: [AuthGuard]},
   { path: 'alreadyRead', component: AlreadyReadComponent, canActivate: [AuthGuard] },
   { path: 'toRead', component: ToReadComponent, canActivate: [AuthGuard] },
   { path: 'reading', component: ReadingComponent, canActivate: [AuthGuard] },

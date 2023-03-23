@@ -92,6 +92,19 @@ app.get("/library", async (req, res) => {
   }
 });
 
+app.get("/filteredLibrary?", async (req, res) => {
+  try{
+    const status = req.query.status;
+    const library = await Library.find({ user: currentUserId, status: status });
+    if (!library) {
+      return res.status(404).json({ message: "Library not found" });
+    }
+    res.status(200).json({ library });
+  }catch(error){
+    res.status(500).json({ message: "Error fetching library", error });
+  }
+});
+
 app.post("/books", async (req, res) => {
   const { title, authors, isbn, img } = req.body;
   try {
