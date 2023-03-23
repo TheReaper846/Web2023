@@ -11,7 +11,7 @@ import { Router } from '@angular/router'; // Ajoutez cette ligne pour importer R
 export class LibraryComponent implements OnInit {
   user: any;
   userid: any;
-  @Input() books: any[] = [];
+  @Input() results: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -24,20 +24,16 @@ export class LibraryComponent implements OnInit {
     if (!this.authService.isAuthenticated) {
       // Si ce n'est pas le cas, redirigez vers le routeur "error"
       this.router.navigate(['/error']);
-    } else {
-      this.userid = this.authService.getCurrentUserId();
-      this.getFilteredLibrary(0); // Modifier cette valeur pour chaque composant (0 pour Library, 1 pour AlreadyRead, etc.
     }
-  }
 
-  getFilteredLibrary(status: number): void {
-    this.profileService.getLibrary(this.userid).subscribe(
-      (response) => {
-        this.books = response;
+    this.profileService.getFullLibrary().subscribe(
+      (result) => {
+      this.results = result.library;
       },
       (error) => {
-        console.error('Error fetching user library', error);
+        console.error('Error fetching books:', error);
       }
     );
+
   }
 }

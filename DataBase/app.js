@@ -80,10 +80,9 @@ app.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-app.get("/library/:userId", async (req, res) => {
-  const { userId } = req.params.userId;
+app.get("/library", async (req, res) => {
   try {
-    const library = await Library.find({ user: userId });
+    const library = await Library.find({ user: currentUserId });
     if (!library) {
       return res.status(404).json({ message: "Library not found" });
     }
@@ -114,6 +113,7 @@ app.post("/currentbook", async (req, res) => {
     res.status(400).json({ message: "Error saving book", error });
   }
 });
+
 app.get("/currentbook", async (req, res) => {
   try {
     const currentBook = await CurrentBook.find();
@@ -206,19 +206,6 @@ app.get("/user", async (req, res) => {
   }
 
 
-});
-
-app.get("/currentUserId", async (req, res) => {
-  const { name } = currentUser;
-  try {
-    const user = await User.findOne({ name });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json({ userId: user._id });
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching user", error });
-  }
 });
 
 app.listen(PORT, () => {

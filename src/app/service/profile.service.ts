@@ -10,8 +10,8 @@ export class ProfileService {
 
   constructor(private http: HttpClient) {}
 
-  getLibrary(userId: string): Observable<any> {
-    return this.http.get(`${this.libraryUrl}/${userId}`);
+  getFullLibrary(): Observable<any> {
+    return this.http.get<any>(`${this.libraryUrl}`);
   }
 
   getFilteredLibrary(userId: string, status: number): Observable<any> {
