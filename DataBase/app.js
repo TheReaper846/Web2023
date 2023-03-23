@@ -203,24 +203,6 @@ app.get("/setStatus?", async (req, res) => {
   }
 });
 
-app.get("/user", async (req, res) => {
-  const { name } = currentUser;
-  let user;
-
-  try {
-    user = await User.findOne({ name: name });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    currentUserId = user._id;
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching user", error });
-  }
-
-
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -38,7 +38,6 @@ export class AuthService {
   return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { name, password }).pipe(
     tap((response) => {
       if (response.user) {
-        console.log(this.http.get<ApiResponse>(`${this.apiUrl}/user`).subscribe());
         this.isAuthenticatedSubject.next(true);
       }
     }));

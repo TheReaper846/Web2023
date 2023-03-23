@@ -34,7 +34,8 @@ export class ReadComponent implements OnInit {
 
   ngOnInit(): void {
     // Get the ISBN of the book from the route parameter
-    const isbn = this.route.snapshot.paramMap.get('entry') || '';
+    let isbn = this.route.snapshot.paramMap.get('entry') || '';
+    isbn = isbn.replace(/\D/g,'');
 
     // Call the apiSearch function with maxResults = 1
     this.bookService.apiSearch('', '', isbn, 1).subscribe((result) => {
@@ -53,7 +54,6 @@ export class ReadComponent implements OnInit {
         if (this.authenticated){
           this.bookService.checkIfInLibrary(this.isbn).subscribe((response) => {
             this.inlibrary = response.inLibrary;
-            console.log(response);
             this.status_0 = response.status === 0;
             this.status_1 = response.status === 1;
             this.status_2 = response.status === 2;

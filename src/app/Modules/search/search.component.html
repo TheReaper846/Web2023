@@ -22,7 +22,12 @@
       <div class="col" *ngFor="let result of results">
         <div class="card h-100 shadow-sm bg-dark">
           <a [routerLink]="['/read', result.isbn]" class="nav-link p-1 text-black">
-            <img [src]="result.img" class="bd-placeholder-img card-img-top" />
+            <ng-container *ngIf="result.img && result.img !== 'No image'; else noImage">
+            <img [src]="result.img" class="bd-placeholder-img card-img-top" alt="Book cover" />
+            </ng-container>
+            <ng-template #noImage>
+            <img src="https://images.assetsdelivery.com/compings_v2/pavelstasevich/pavelstasevich1811/pavelstasevich181101027.jpg" class="bd-placeholder-img card-img-top" alt="Fallback image" />
+            </ng-template>
             <div class="card-body">
               <p class="card-text text-white text-center">{{result.title}}</p>
             </div>

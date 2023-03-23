@@ -44,6 +44,11 @@ export class BookService {
 
     return new Observable((observer) => {
       this.http.get(url).subscribe(async (data: any) => {
+        if (data.totalItems === 0) {
+          observer.error('No results found');
+          observer.complete();
+          return;
+        }
         const searchResults = data.items.map((item: any): Book => {
           let isbn = '';
           let authors = '';
