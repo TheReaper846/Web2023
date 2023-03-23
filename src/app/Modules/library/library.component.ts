@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { ProfileService } from '../service/profile.service';
+import { AuthService } from '../../Auth/auth.service';
+import { ProfileService } from '../../service/profile.service';
 import { Router } from '@angular/router'; // Ajoutez cette ligne pour importer Router
 
 @Component({

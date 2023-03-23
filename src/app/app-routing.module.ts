@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { IndexComponent } from './index/index.component';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { SignupComponent } from './signup/signup.component';
-import { ErrorComponent } from './error/error.component';
-import { LibraryComponent } from './library/library.component';
-import { AlreadyReadComponent } from './already-read/already-read.component';
-import { ToReadComponent } from './to-read/to-read.component';
-import { ReadingComponent } from './reading/reading.component';
-import { SearchComponent } from './search/search.component';
-import { ReadComponent } from './read/read.component';
-import { LogoutComponent } from './logout/logout.component';
-import { AuthGuard } from './auth.guard';
+import { IndexComponent } from './Modules/index/index.component';
+import { LoginComponent } from './Modules/login/login.component';
+import { ProfileComponent } from './Modules/profile/profile.component';
+import { SignupComponent } from './Modules/signup/signup.component';
+import { ErrorComponent } from './Modules/error/error.component';
+import { LibraryComponent } from './Modules/library/library.component';
+import { AlreadyReadComponent } from './Modules/already-read/already-read.component';
+import { ToReadComponent } from './Modules/to-read/to-read.component';
+import { ReadingComponent } from './Modules/reading/reading.component';
+import { SearchComponent } from './Modules/search/search.component';
+import { ReadComponent } from './Modules/read/read.component';
+import { LogoutComponent } from './Modules//logout/logout.component';
+import { AuthGuard } from './Auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },

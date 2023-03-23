@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { BookService } from '../service/book.service';
+import { BookService } from '../../service/book.service';
 
 @Component({
   selector: 'app-index',

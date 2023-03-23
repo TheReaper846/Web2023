@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from '..//service/book.service';
-import { Book } from '../models/book.model';
-import { AuthService } from '../auth.service';
+import { BookService } from '../../service/book.service';
+import { Book } from '../../models/book.model';
+import { AuthService } from '../..//Auth/auth.service';
 import { of, switchMap } from 'rxjs';
 
 

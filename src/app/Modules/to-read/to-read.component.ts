@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { ProfileService } from '../service/profile.service';
+import { AuthService } from '../../Auth/auth.service';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
-  selector: 'app-already-read',
-  templateUrl: './already-read.component.html',
-  styleUrls: ['./already-read.component.css']
+  selector: 'app-to-read',
+  templateUrl: './to-read.component.html',
+  styleUrls: ['./to-read.component.css']
 })
-export class AlreadyReadComponent implements OnInit {
+export class ToReadComponent implements OnInit {
   user: any;
   @Input() books: any[] = [];
 
@@ -20,7 +20,7 @@ export class AlreadyReadComponent implements OnInit {
     this.authService.getProfile().subscribe(
       (response) => {
         this.user = response.user;
-        this.getFilteredLibrary(1); // Modifier cette valeur pour chaque composant (0 pour Library, 1 pour AlreadyRead, etc.)
+        this.getFilteredLibrary(2); // Modifier cette valeur pour chaque composant (0 pour Library, 1 pour AlreadyRead, etc.)
       },
       (error) => {
         console.error('Error fetching user profile', error);
@@ -38,5 +38,4 @@ export class AlreadyReadComponent implements OnInit {
       }
     );
   }
-
 }
