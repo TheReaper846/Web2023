@@ -64,8 +64,9 @@ app.post("/login", async (req, res) => {
     }
 
     // Si l'utilisateur existe et que le mot de passe est correct, enregistrer l'ID de l'utilisateur dans la session
-    req.session.userId = user._id;
-    currentUser = name;
+    currentUserId = user._id;
+    currentUser = user.name;
+
     res.status(200).json({ message: "Logged in successfully", user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
@@ -74,6 +75,8 @@ app.post("/login", async (req, res) => {
 
 app.post("/logout", (req, res) => {
   req.session = null;
+  currentUserId = null;
+  currentUser = null;
   res.status(200).json({ message: "Logged out successfully" });
 });
 
@@ -135,72 +138,74 @@ app.post("/clear", async (req, res) => {
 
 app.get("/search", bookController.getAllBooks);
 
-app.get("/bookstatus", async (req, res) => {
-  const { title, isbn, userId } = req.query;
+app.get("/inlib?", async (req, res) => {
+  try{
+    const isbn = req.query.isbn;
+    const inLibrary = await Library.findOne({isbn: isbn, user: currentUserId});
+    if (inLibrary) {
+      res.status(200).json({ inLibrary: true, status: inLibrary.status });
+    }
+    else {
+      res.status(200).json({ inLibrary: false });
+    }
+  }catch(error){
+    res.status(500).json({ message: "Error fetching book", error });
+  }
+});
 
+app.post("/addToLibrary", (req, res) => {
+  const { title, authors, isbn, img} = req.body;
   try {
-    const bookStatus = await Library.findOne({
-      title: title,
-      isbn: isbn,
-      user: userId,
-    });
-
-    if (!bookStatus) {
-      return res.status(404).json({ message: "Book status not found" });
-    }
-
-    let status = {};
-
-    if (bookStatus.status === 0) {
-      status = {
-        status_0: true,
-        status_1: false,
-        status_2: false,
-        status_3: false,
-      };
-    } else if (bookStatus.status === 1) {
-      status = {
-        status_0: false,
-        status_1: true,
-        status_2: false,
-        status_3: false,
-      };
-    } else if (bookStatus.status === 2) {
-      status = {
-        status_0: false,
-        status_1: false,
-        status_2: true,
-        status_3: false,
-      };
-    } else if (bookStatus.status === 3) {
-      status = {
-        status_0: false,
-        status_1: false,
-        status_2: false,
-        status_3: true,
-      };
-    }
-
-    res.status(200).json(status);
+    const book = new Library({ title, authors, isbn, img, user: currentUserId, status: 0 });
+    book.save();
+    res.status(201).json({ message: "Book saved successfully", book });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching book status", error });
+    res.status(400).json({ message: "Error saving book", error });
+  }
+});
+
+app.get("/removeBook?", async (req, res) => {
+  const isbn = req.query.isbn;
+  try {
+    const deleted = await Library.deleteOne({isbn: isbn, user: currentUserId});
+    if (deleted.deletedCount === 0) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    res.status(200).json({ message: "Book deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: "Error deleting book", error });
+  }
+});
+
+app.get("/setStatus?", async (req, res) => {
+  const {isbn, status} = req.query;
+  try {
+    const updated = await Library.updateOne({isbn: isbn, user: currentUserId}, {status: parseInt(status)});
+    if (updated.nModified === 0) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    res.status(200).json({ message: "Book updated successfully" });
+  }catch(error){
+    res.status(400).json({ message: "Error updating book", error });
   }
 });
 
 app.get("/user", async (req, res) => {
   const { name } = currentUser;
+  let user;
 
   try {
-    const user = await User.findOne({ name });
+    user = await User.findOne({ name: name });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    currentUserId = user._id;
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Error fetching user", error });
   }
 
-  currentUserId = user._id;
+
 });
 
 app.get("/currentUserId", async (req, res) => {

@@ -26,7 +26,7 @@ export class ReadComponent implements OnInit {
   // Other variables for authentication, data, and library status
   authenticated = false;
   inlibrary = false;
-  status_0 = false;
+  status_0 = true;
   status_1 = false;
   status_2 = false;
   status_3 = false;
@@ -49,7 +49,72 @@ export class ReadComponent implements OnInit {
         this.categories = book.categories ?? 'No categories available';
         this.pageCount = book.pageCount ?? 0;
         this.isbn = book.isbn;
+
+        if (this.authenticated){
+          this.bookService.checkIfInLibrary(this.isbn).subscribe((response) => {
+            this.inlibrary = response.inLibrary;
+            console.log(response);
+            this.status_0 = response.status === 0;
+            this.status_1 = response.status === 1;
+            this.status_2 = response.status === 2;
+            this.status_3 = response.status === 3;
+          });
+        }
+
       });
+    });
+    // Check if the user is authenticated
+    this.authenticated = this.authService.isAuthenticated;
+  }
+
+  // Function to add the book to the library
+  addToLibrary(): void {
+    const book: Book = {
+      img: this.img,
+      title: this.title,
+      authors: this.authors,
+      isbn: this.isbn,
+    }
+
+    this.bookService.addToLibrary(book).subscribe((response) => {
+      this.inlibrary = true;
+      this.status_0 = true;
+    });
+  }
+
+  removeBook(): void {
+    this.bookService.removeBook(this.isbn).subscribe((response) => {
+      this.inlibrary = false;
+      this.status_0 = true;
+      this.status_1 = false;
+      this.status_2 = false;
+      this.status_3 = false;
+    });
+  }
+
+  // Function to change the status of the book
+  changeStatus(status: string): void {
+    this.status_0 = false;
+    this.status_1 = false;
+    this.status_2 = false;
+    this.status_3 = false;
+    switch (status) {
+      case '0':
+        this.status_0 = true;
+        break;
+      case '1':
+        this.status_1 = true;
+        break;
+      case '2':
+        this.status_2 = true;
+        break;
+      case '3':
+        this.status_3 = true;
+        break;
+    }
+
+    this.bookService.setStatus(this.isbn, status).subscribe((response) => {
+      console.log(response);
     });
   }
 }

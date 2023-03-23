@@ -84,7 +84,6 @@ export class BookService {
           const savedBooks = await Promise.all(
           searchResults.map((book: Book) => this.saveCurrentBook(book).toPromise())
           );
-          console.log('save');
           observer.next(savedBooks);
           observer.complete();
         }else{
@@ -107,8 +106,23 @@ export class BookService {
   }
 
   getCurrentBook(): Observable<any> {
-    console.log('get');
     return this.http.get<any>(`${this.API_URL}/currentbook`);
+  }
+
+  checkIfInLibrary(isbn: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/inlib?isbn=${isbn}`);
+  }
+
+  addToLibrary(book: Book): Observable<Book> {
+    return this.http.post<Book>(`${this.API_URL}/addToLibrary`, book);
+  }
+
+  removeBook(isbn: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/removeBook?isbn=${isbn}`);
+  }
+
+  setStatus(isbn: string, status: string): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/setStatus?isbn=${isbn}&status=${status}`);
   }
 
   clearBooks(): Observable<any> {

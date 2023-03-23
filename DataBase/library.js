@@ -5,10 +5,6 @@ const librarySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  rank: {
-    type: Number,
-    required: true,
-  },
   title: {
     type: String,
     required: true,

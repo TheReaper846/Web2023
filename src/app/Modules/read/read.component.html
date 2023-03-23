@@ -10,31 +10,30 @@
       <div class="row justify-content-center">
         <div class="clearfix mt-4">
           <img [src]="img" class="col float-xl-end mb-3 ms-md-3 w-25" alt="..." />
-          <p class="fs-1 pt-2 pb-2">{{title}}</p>
-          <p class="fs-1 pb-3">by {{authors}}</p>
+          <p class="fs-1 lh-base">{{title}} by {{authors}}</p>
           <!-- Use *ngIf and the corresponding variables to display the buttons based on authentication, data, etc. -->
           <p *ngIf="authenticated && !inlibrary">
-            <a [routerLink]="['/addTolibrary', isbn]" class="btn btn-info btn-sm">Add to my books</a>
+            <button (click)="addToLibrary()" class="btn btn-info btn-sm">Add to my books</button>
           </p>
           <p *ngIf="authenticated && inlibrary">
-            <a [routerLink]="['/removeFromlibrary', isbn]" class="btn btn-info btn-sm">Remove from my books</a>
+            <a (click)="removeBook()" class="btn btn-info btn-sm">Remove from my books</a>
             <!-- Utilisez *ngIf pour afficher les boutons de changement de statut en fonction du statut actuel du livre -->
             <ng-container *ngIf="status_0">
-              <a [routerLink]="['/setRead', isbn]" class="btn btn-secondary btn-sm">Set as "Read"</a>
-              <a [routerLink]="['/setToRead', isbn]" class="btn btn-secondary btn-sm">Set as "To be read"</a>
-              <a [routerLink]="['/setReading', isbn]" class="btn btn-secondary btn-sm">Set as "Reading in process"</a>
+              <a (click)="changeStatus('1')" class="btn btn-secondary btn-sm mx-3">Set as "Read"</a>
+              <a (click)="changeStatus('2')" class="btn btn-secondary btn-sm ">Set as "To be read"</a>
+              <a (click)="changeStatus('3')" class="btn btn-secondary btn-sm mx-3">Set as "Reading in process"</a>
             </ng-container>
             <ng-container *ngIf="status_1">
-              <a [routerLink]="['/setToRead', isbn]" class="btn btn-secondary btn-sm">Set as "To be read"</a>
-              <a [routerLink]="['/setReading', isbn]" class="btn btn-secondary btn-sm">Set as "Reading in process"</a>
+              <a (click)="changeStatus('2')" class="btn btn-secondary btn-sm mx-3">Set as "To be read"</a>
+              <a (click)="changeStatus('3')" class="btn btn-secondary btn-sm">Set as "Reading in process"</a>
             </ng-container>
             <ng-container *ngIf="status_2">
-              <a [routerLink]="['/setRead', isbn]" class="btn btn-secondary btn-sm">Set as "Read"</a>
-              <a [routerLink]="['/setReading', isbn]" class="btn btn-secondary btn-sm">Set as "Reading in process"</a>
+              <a (click)="changeStatus('1')" class="btn btn-secondary btn-sm mx-3">Set as "Read"</a>
+              <a (click)="changeStatus('3')" class="btn btn-secondary btn-sm">Set as "Reading in process"</a>
             </ng-container>
             <ng-container *ngIf="status_3">
-              <a [routerLink]="['/setRead', isbn]" class="btn btn-secondary btn-sm">Set as "Read"</a>
-              <a [routerLink]="['/setToRead', isbn]" class="btn btn-secondary btn-sm">Set as "To be read"</a>
+              <a (click)="changeStatus('1')" class="btn btn-secondary btn-sm mx-3">Set as "Read"</a>
+              <a (click)="changeStatus('2')" class="btn btn-secondary btn-sm">Set as "To be read"</a>
             </ng-container>
           </p>
           <p>{{description}}</p>
