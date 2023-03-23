@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 interface User {
   id: number;
@@ -15,16 +16,8 @@ interface User {
 })
 
 export class AppComponent {
-  users: User[] = [];
 
-  constructor(private http: HttpClient) {
-    this.http.get<User[]>('http://localhost:3000/users').subscribe(
-      (users: User[]) => {
-        this.users = users;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  constructor(private http: HttpClient, private titleService: Title) {
+    this.titleService.setTitle('BookWorm');
   }
 }

@@ -1,0 +1,41 @@
+<app-header></app-header>
+
+<div
+  class="container-fluid min-vh-100 pt-3 pt-4 px-5 text-white"
+  style="background-color: #4c4d4e"
+>
+  <div class="container">
+    <div>
+      <h1 class="mt-4 mb-5">Résultats les plus pertinents :</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <ng-container *ngIf="!results.length">
+      <div class="row justify-content-md-center">
+        <h1 class="text-center fw-bold my-4">NO RESULTS</h1>
+      </div>
+    </ng-container>
+    <div
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-5"
+    >
+      <div class="col" *ngFor="let result of results">
+        <div class="card h-100 shadow-sm bg-dark">
+          <a [routerLink]="['/read', result.isbn]" class="nav-link p-1 text-black">
+            <ng-container *ngIf="result.img && result.img !== 'No image'; else noImage">
+            <img [src]="result.img" class="bd-placeholder-img card-img-top" alt="Book cover" />
+            </ng-container>
+            <ng-template #noImage>
+            <img src="https://images.assetsdelivery.com/compings_v2/pavelstasevich/pavelstasevich1811/pavelstasevich181101027.jpg" class="bd-placeholder-img card-img-top" alt="Fallback image" />
+            </ng-template>
+            <div class="card-body">
+              <p class="card-text text-white text-center">{{result.title}}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
