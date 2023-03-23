@@ -15,16 +15,4 @@ interface User {
 })
 
 export class AppComponent {
-  users: User[] = [];
-
-  constructor(private http: HttpClient) {
-    this.http.get<User[]>('http://localhost:3000/users').subscribe(
-      (users: User[]) => {
-        this.users = users;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
 }

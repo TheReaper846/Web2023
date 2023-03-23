@@ -41,6 +41,7 @@ export class BookService {
       });
     }
 
+
     return new Observable((observer) => {
       this.http.get(url).subscribe(async (data: any) => {
         const searchResults = data.items.map((item: any): Book => {
@@ -79,17 +80,35 @@ export class BookService {
         });
 
         // Save the search results in the database and return the saved books
-        const savedBooks = await Promise.all(
-          searchResults.map((book: Book) => this.saveBook(book).toPromise())
-        );
-        observer.next(savedBooks);
-        observer.complete();
+        if (maxResults === 1) {
+          const savedBooks = await Promise.all(
+          searchResults.map((book: Book) => this.saveCurrentBook(book).toPromise())
+          );
+          console.log('save');
+          observer.next(savedBooks);
+          observer.complete();
+        }else{
+          const savedBooks = await Promise.all(
+            searchResults.map((book: Book) => this.saveBook(book).toPromise())
+          );
+          observer.next(savedBooks);
+          observer.complete();
+        }
       });
     });
   }
 
   saveBook(book: Book): Observable<Book> {
     return this.http.post<Book>(`${this.API_URL}/books`, book);
+  }
+
+  saveCurrentBook(book: Book): Observable<Book> {
+    return this.http.post<Book>(`${this.API_URL}/currentbook`, book);
+  }
+
+  getCurrentBook(): Observable<any> {
+    console.log('get');
+    return this.http.get<any>(`${this.API_URL}/currentbook`);
   }
 
   clearBooks(): Observable<any> {

@@ -10,12 +10,13 @@
       <div class="row justify-content-center">
         <div class="clearfix mt-4">
           <img [src]="img" class="col float-xl-end mb-3 ms-md-3 w-25" alt="..." />
-          <p class="fs-1">{{title}} by {{authors}}</p>
+          <p class="fs-1 pt-2 pb-2">{{title}}</p>
+          <p class="fs-1 pb-3">by {{authors}}</p>
           <!-- Use *ngIf and the corresponding variables to display the buttons based on authentication, data, etc. -->
-          <p *ngIf="authenticated && datas && !inlibrary">
+          <p *ngIf="authenticated && !inlibrary">
             <a [routerLink]="['/addTolibrary', isbn]" class="btn btn-info btn-sm">Add to my books</a>
           </p>
-          <p *ngIf="authenticated && datas && inlibrary">
+          <p *ngIf="authenticated && inlibrary">
             <a [routerLink]="['/removeFromlibrary', isbn]" class="btn btn-info btn-sm">Remove from my books</a>
             <!-- Utilisez *ngIf pour afficher les boutons de changement de statut en fonction du statut actuel du livre -->
             <ng-container *ngIf="status_0">
@@ -37,10 +38,10 @@
             </ng-container>
           </p>
           <p>{{description}}</p>
-          <p>Published by {{publisher}} in {{publishedDate}}</p>
-          <p>Categories : {{categories}}</p>
-          <p>Number of pages : {{pageCount}}</p>
-          <p>isbn : {{isbn}}</p>
+          <p><b>Published by</b> {{publisher}} <b>in</b> {{publishedDate}}</p>
+          <p><b>Categories : </b>{{categories}}</p>
+          <p><b>Number of pages :</b> {{pageCount}}</p>
+          <p><b>isbn :</b> {{isbn}}</p>
         </div>
       </div>
     </div>

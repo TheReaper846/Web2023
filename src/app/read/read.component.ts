@@ -25,7 +25,6 @@ export class ReadComponent implements OnInit {
 
   // Other variables for authentication, data, and library status
   authenticated = false;
-  datas = false;
   inlibrary = false;
   status_0 = false;
   status_1 = false;
@@ -35,50 +34,22 @@ export class ReadComponent implements OnInit {
 
   ngOnInit(): void {
     // Get the ISBN of the book from the route parameter
-    const isbn = this.route.snapshot.paramMap.get('isbn') ?? '';
-    const userId = this.authService.getCurrentUserId();
+    const isbn = this.route.snapshot.paramMap.get('entry') || '';
 
     // Call the apiSearch function with maxResults = 1
-    this.bookService.apiSearch('', '', isbn, 1).subscribe((books: Book[]) => {
-      // Display the book details
-      const book = books[0];
-      console.log(book);
-      this.img = book.img;
-      this.title = book.title;
-      this.authors = book.authors;
-      this.description = book.description ?? 'No description available';
-      this.publisher = book.publisher ?? 'No publisher available';
-      this.publishedDate = book.publishedDate ?? 'No published date available';
-      this.categories = book.categories ?? 'No categories available';
-      this.pageCount = book.pageCount ?? 0;
-      this.isbn = book.isbn;
+    this.bookService.apiSearch('', '', isbn, 1).subscribe((result) => {
+      this.bookService.getCurrentBook().subscribe((response) => {
+        const book = response.currentBook[0];
+        this.img = book.img;
+        this.title = book.title;
+        this.authors = book.authors;
+        this.description = book.description ?? 'No description available';
+        this.publisher = book.publisher ?? 'No publisher available';
+        this.publishedDate = book.publishedDate ?? 'No published date available';
+        this.categories = book.categories ?? 'No categories available';
+        this.pageCount = book.pageCount ?? 0;
+        this.isbn = book.isbn;
+      });
     });
-
-    this.authService.getCurrentUserId()
-    .pipe(
-      switchMap((userId: string | null) => {
-        if (userId) {
-          return this.bookService.getBookStatus(this.title, this.isbn, userId);
-        } else {
-          return of({
-            status_0: false,
-            status_1: false,
-            status_2: false,
-            status_3: false,
-          });
-        }
-      })
-    )
-    .subscribe(
-      (status) => {
-        this.status_0 = status.status_0;
-        this.status_1 = status.status_1;
-        this.status_2 = status.status_2;
-        this.status_3 = status.status_3;
-      },
-      (error) => {
-        console.error('Error fetching book status:', error);
-      }
-    );
   }
 }

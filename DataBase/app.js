@@ -6,6 +6,7 @@ const User = require("./user");
 const Library = require("./library");
 const Book = require("./book");
 const bookController = require("./bookController");
+const CurrentBook = require("./currentBook");
 const cors = require("cors");
 
 const app = express();
@@ -97,6 +98,29 @@ app.post("/books", async (req, res) => {
     res.status(201).json({ message: "Book saved successfully", book });
   } catch (error) {
     res.status(400).json({ message: "Error saving book", error });
+  }
+});
+
+app.post("/currentbook", async (req, res) => {
+  const { title, authors, isbn, img, description, publisher, publishedDate, categories, pageCount } = req.body;
+  try {
+    const currentBook = new CurrentBook({ title, authors, isbn, img, description, publisher, publishedDate, categories, pageCount });
+    await currentBook.save();
+    res.status(201).json({ message: "Book saved successfully", currentBook });
+  } catch (error) {
+    res.status(400).json({ message: "Error saving book", error });
+  }
+});
+app.get("/currentbook", async (req, res) => {
+  try {
+    const currentBook = await CurrentBook.find();
+    if (!currentBook) {
+      return res.status(404).json({ message: "Current book not found" });
+    }
+    await CurrentBook.deleteMany({});
+    res.status(200).json({ currentBook });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching book", error });
   }
 });
 

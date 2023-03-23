@@ -21,7 +21,7 @@
     >
       <div class="col" *ngFor="let result of results">
         <div class="card h-100 shadow-sm bg-dark">
-          <a [routerLink]="['/read', result.entry]" class="nav-link p-1 text-black">
+          <a [routerLink]="['/read', result.isbn]" class="nav-link p-1 text-black">
             <img [src]="result.img" class="bd-placeholder-img card-img-top" />
             <div class="card-body">
               <p class="card-text text-white text-center">{{result.title}}</p>

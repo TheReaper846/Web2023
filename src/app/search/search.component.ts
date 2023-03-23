@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
     this.bookService.getAllBooks().subscribe(
       (books) => {
         this.results = books;
+        console.log('Books fetched from the database:', books);
       },
       (error) => {
         console.error('Error fetching books:', error);

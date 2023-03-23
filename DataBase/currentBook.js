@@ -17,6 +17,26 @@ const currentBookSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
+  publisher: {
+    type: String,
+    required: true,
+  },
+  publishedDate: {
+    type: String,
+    required: true,
+  },
+  categories: {
+    type: String,
+    required: true,
+  },
+  pageCount: {
+    type: String,
+    required: true,
+  }
 });
 
 const CurrentBook = mongoose.model("CurrentBook", currentBookSchema);
